@@ -32,13 +32,13 @@ public class InventoryService {
                 .build()).toList();
     }
 
-    public List<VenueInventoryResponse> getVenueInformation(final Long venueId) {
+    public VenueInventoryResponse getVenueInformation(final Long venueId) {
         final Venue venue = venueRepository.findById(venueId).orElse(null);
-        return List.of(VenueInventoryResponse.builder()
+        return VenueInventoryResponse.builder()
                 .venueId(venue.getId())
                 .venueName(venue.getName())
                 .totalCapacity(venue.getTotalCapacity())
-                .build());
+                .build();
     }
 
 }

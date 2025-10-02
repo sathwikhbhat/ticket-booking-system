@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class InventoryController {
     
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
     @Autowired
     public InventoryController(final InventoryService inventoryService) {

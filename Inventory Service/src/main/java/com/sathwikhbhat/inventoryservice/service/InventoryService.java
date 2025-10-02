@@ -34,6 +34,7 @@ public class InventoryService {
 
     public VenueInventoryResponse getVenueInformation(final Long venueId) {
         final Venue venue = venueRepository.findById(venueId).orElse(null);
+        assert venue != null;
         return VenueInventoryResponse.builder()
                 .venueId(venue.getId())
                 .venueName(venue.getName())

@@ -7,5 +7,5 @@ CREATE TABLE `order`
     customer_id BIGINT,
     event_id    BIGINT,
     CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE SET NULL,
-    CONSTRAINT fk_order_event FOREIGN KEY (event_id) REFERENCES evente (id) ON DELETE SET NULL
+    CONSTRAINT fk_order_event FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE SET NULL
 );

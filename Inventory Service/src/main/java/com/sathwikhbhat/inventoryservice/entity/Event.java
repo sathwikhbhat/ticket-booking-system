@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -25,5 +27,7 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
+
+    private BigDecimal ticketPrice;
 
 }

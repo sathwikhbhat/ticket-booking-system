@@ -1,0 +1,2 @@
+ALTER TABLE event
+    ADD COLUMN ticket_price DECIMAL(10, 2) NOT NULL DEFAULT 500.00;

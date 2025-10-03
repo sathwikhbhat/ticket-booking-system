@@ -17,22 +17,40 @@ public class InventoryServiceRoutes {
     @Bean
     public RouterFunction<ServerResponse> inventoryRoutes() {
         return GatewayRouterFunctions.route("inventory-service")
+                .route(RequestPredicates.GET("/api/v1/inventory/events"),
+                        HandlerFunctions.http("http://localhost:8080/api/v1/inventory/events"))
+
                 .route(RequestPredicates.path("/api/v1/inventory/venue/{venueId}"),
-                        request -> forwardWithPathVariable(request, "venueId",
-                                "http://localhost:8080/api/v1/inventory/venue/"))
+                        request -> forwardWithPathVariables(request,
+                                "http://localhost:8080/api/v1/inventory/venue/",
+                                "venueId"))
 
                 .route(RequestPredicates.path("/api/v1/inventory/event/{eventId}"),
-                        request -> forwardWithPathVariable(request, "eventId",
-                                "http://localhost:8080/api/v1/inventory/event/"))
-                .build();
+                        request -> forwardWithPathVariables(request,
+                                "http://localhost:8080/api/v1/inventory/event/",
+                                "eventId"))
 
+                .route(RequestPredicates.PUT("/api/v1/inventory/event/{eventId}/capacity/{ticketsBooked}"),
+                        request -> forwardWithPathVariables(request,
+                                "http://localhost:8080/api/v1/inventory/event/",
+                                "eventId", "capacity", "ticketsBooked"))
+                .build();
     }
 
-    private static ServerResponse forwardWithPathVariable(ServerRequest request,
-                                                          String pathVariable,
-                                                          String baseUrl) throws Exception {
-        String value = request.pathVariable(pathVariable);
-        return HandlerFunctions.http(baseUrl + value).handle(request);
+    private static ServerResponse forwardWithPathVariables(ServerRequest request, String baseUrl, String... pathVariables) throws Exception {
+        StringBuilder urlBuilder = new StringBuilder(baseUrl);
+
+        for (int i = 0; i < pathVariables.length; i++) {
+            String pathVariable = pathVariables[i];
+            String value = request.pathVariable(pathVariable);
+
+            if (i > 0) {
+                urlBuilder.append("/");
+            }
+            urlBuilder.append(value);
+        }
+
+        return HandlerFunctions.http(urlBuilder.toString()).handle(request);
     }
 
     @Bean

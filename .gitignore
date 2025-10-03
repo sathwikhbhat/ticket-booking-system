@@ -1,0 +1,51 @@
+# Build output
+**/target/
+**/build/
+**/out/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+logs/
+log/
+
+# Spring configs 
+application-*.properties
+!application.properties
+application-*.yml
+!application.yml
+
+# Secrets / credentials
+.env*
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+*.keystore
+*.truststore
+
+# Docker / local volumes
+Inventory Service/volume-data/
+**/volume-data/
+
+# Generated sources
+**/generated-sources/
+**/generated-test-sources/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Packaged artifacts
+*.jar
+*.war
+*.ear

@@ -31,18 +31,19 @@ public class BookingService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public BookingResponse createBooking(final BookingRequest request) {
-        final Customer customer = customerRepository.findById(request.getUserId())
+    public BookingResponse createBooking(final BookingRequest bookingRequest) {
+        final Customer customer = customerRepository.findById(bookingRequest.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         log.info("Customer found: {}", customer);
 
-        final InventoryResponse inventoryResponse = inventoryServiceClient.getInventory(request.getEventId());
+        final InventoryResponse inventoryResponse = inventoryServiceClient.getInventory(bookingRequest.getEventId());
         log.info("Inventory Response: {}", inventoryResponse);
-        if (inventoryResponse.getCapacity() < request.getTicketCount()) {
+
+        if (inventoryResponse.getCapacity() < bookingRequest.getTicketCount()) {
             throw new RuntimeException("Not enough inventory");
         }
 
-        final BookingEvent bookingEvent = createBookingEvent(request, customer, inventoryResponse);
+        final BookingEvent bookingEvent = createBookingEvent(bookingRequest, customer, inventoryResponse);
 
         kafkaTemplate.send("booking", bookingEvent);
         log.info("Booking sent to Kafka: {}", bookingEvent);

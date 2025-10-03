@@ -40,7 +40,7 @@ public class BookingServiceRoutes {
     public RouterFunction<ServerResponse> bookingServiceApiDocs() {
         return GatewayRouterFunctions.route("booking-service-api-docs")
                 .route(RequestPredicates.path("/docs/bookingservice/v3/api-docs"),
-                        HandlerFunctions.forward("http://localhost:8081"))
+                        HandlerFunctions.http("http://localhost:8081"))
                 .filter(setPath("/v3/api-docs"))
                 .build();
     }

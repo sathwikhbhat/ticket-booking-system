@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql
+    image: mysql:8.3.0
     container_name: mysql
     restart: always
     environment:
@@ -14,7 +14,7 @@ services:
       - db-data:/var/log/mysql
 
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:7.5.0
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -24,7 +24,7 @@ services:
       ZOOKEEPER_TICK_TIME: 3000
 
   kafka-broker:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:7.5.0
     container_name: kafka-broker
     ports:
       - "9092:9092"
@@ -40,7 +40,7 @@ services:
 
   kafka-ui:
     container_name: kafka-ui
-    image: provectuslabs/kafka-ui
+    image: provectuslabs/kafka-ui:latest
     ports:
       - "8084:8080"
     depends_on:
@@ -48,10 +48,10 @@ services:
     environment:
       KAFKA_CLUSTERS_NAME: local
       KAFKA_CLUSTERS_BOOTSTRAPSERVERS: kafka-broker:29092
-      DYNAMIC_CONFIG_ENABLED: 'true'
+      DYNAMIC_CONFIG_ENABLED: "true"
 
   kafka-schema-registry:
-    image: confluentinc/cp-schema-registry
+    image: confluentinc/cp-schema-registry:7.5.0
     hostname: kafka-schema-registry
     container_name: kafka-schema-registry
     depends_on:
@@ -60,7 +60,7 @@ services:
       - "8083:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: kafka-schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "kafka-broker:29092"
       SCHEMA_REGISTRY_LISTENERS: http://kafka-schema-registry:8081
 
 volumes:

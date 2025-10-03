@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/inventory")
 public class InventoryController {
-    
+
     private final InventoryService inventoryService;
 
     @Autowired
@@ -23,18 +22,18 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping("/inventory/events")
-    public @ResponseBody List<EventInventoryResponse> inventoryGetAllEvents() {
+    @GetMapping("/events")
+    public List<EventInventoryResponse> inventoryGetAllEvents() {
         return inventoryService.getAllEvents();
     }
 
-    @GetMapping("/inventory/venue/{venueId}")
-    public @ResponseBody VenueInventoryResponse inventoryByVenueId(@PathVariable final Long venueId) {
+    @GetMapping("/venue/{venueId}")
+    public VenueInventoryResponse inventoryByVenueId(@PathVariable final Long venueId) {
         return inventoryService.getVenueInformation(venueId);
     }
 
-    @GetMapping("/inventory/event/{eventId}")
-    public @ResponseBody EventInventoryResponse inventoryForEvent(@PathVariable final Long eventId) {
+    @GetMapping("/event/{eventId}")
+    public EventInventoryResponse inventoryForEvent(@PathVariable final Long eventId) {
         return inventoryService.getEventInventory(eventId);
     }
 

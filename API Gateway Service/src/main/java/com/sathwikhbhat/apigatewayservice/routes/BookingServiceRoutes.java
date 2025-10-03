@@ -14,7 +14,7 @@ public class BookingServiceRoutes {
     @Bean
     public RouterFunction<ServerResponse> inventoryRoutes() {
         return GatewayRouterFunctions.route("inventory-service")
-                .route(RequestPredicates.POST("/api/v1/bookTickets"),
+                .route(RequestPredicates.POST("/api/v1/booking"),
                         HandlerFunctions.forward("http://localhost:8081/api/v1/booking"))
                 .build();
     }

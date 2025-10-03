@@ -16,7 +16,7 @@ import java.net.URI;
 public class BookingServiceRoutes {
 
     @Bean
-    public RouterFunction<ServerResponse> inventoryRoutes() {
+    public RouterFunction<ServerResponse> bookingRoutes() {
         return GatewayRouterFunctions.route("booking-service")
                 .route(RequestPredicates.POST("/api/v1/booking"),
                         HandlerFunctions.forward("http://localhost:8081/api/v1/booking"))
